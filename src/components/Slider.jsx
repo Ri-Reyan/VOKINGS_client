@@ -39,7 +39,7 @@ const Slider = () => {
   return (
     <div
       ref={slideRef}
-      className="fixed top-0 right-0 h-screen w-4/5 sm:w-3/5 md:w-1/3 bg-blue-50 backdrop-blur-xl shadow-lg z-40 flex flex-col items-center pt-20 lg:hidden"
+      className="fixed top-0 right-0 h-screen w-1/3 sm:w-3/5 md:w-1/3 bg-blue-50 backdrop-blur-xl shadow-lg z-60 flex flex-col items-center pt-20 lg:hidden"
     >
       <nav
         ref={sliderTextRef}
