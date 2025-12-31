@@ -1,0 +1,159 @@
+import React, { useEffect, useState } from "react";
+import axios from "axios";
+import { useLocation, useNavigate } from "react-router-dom";
+
+const ClientRequest = () => {
+  const { state } = useLocation();
+  const navigate = useNavigate();
+  const serviceId = state?.serviceId;
+
+  const [service, setService] = useState(null);
+  const [loading, setLoading] = useState(true);
+
+  const [formData, setFormData] = useState({
+    clientName: "",
+    serviceDate: "",
+    price: "",
+  });
+
+  useEffect(() => {
+    if (!serviceId) return;
+
+    const fetchService = async () => {
+      try {
+        const res = await axios.post(
+          `${import.meta.env.VITE_API_URI}/api/user/request`,
+          { serviceId },
+          { withCredentials: true }
+        );
+
+        setService(res.data.service);
+      } catch (err) {
+        console.error("Service fetch failed:", err);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchService();
+  }, [serviceId]);
+
+  if (!serviceId) {
+    return (
+      <div className="text-center mt-[20vh]">
+        <h1 className="text-xl text-red-500">Invalid request context</h1>
+        <button
+          onClick={() => navigate("/services")}
+          className="mt-4 px-4 py-2 bg-blue-500 text-white rounded"
+        >
+          Go Back
+        </button>
+      </div>
+    );
+  }
+
+  if (loading) {
+    return (
+      <div className="text-center mt-[20vh] text-blue-500 text-xl">
+        Loading service details...
+      </div>
+    );
+  }
+
+  const handleChange = (e) => {
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value,
+    });
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    if (Number(formData.price) < 40) {
+      alert("Price must be more than or equal $40");
+      return;
+    }
+
+    // Next step: send this to backend
+    console.log({
+      serviceId,
+      ...formData,
+    });
+
+    alert("Request submitted successfully");
+  };
+
+  return (
+    <div className="max-w-3xl mx-auto mt-[12vh] p-6 bg-blue-100 rounded-md shadow-md">
+      {/* Service Verification */}
+      <h1 className="text-2xl font-semibold text-blue-800 mb-4">
+        Verify Service
+      </h1>
+
+      <div className="bg-blue-200 p-4 rounded-md mb-6">
+        <p className="text-lg text-blue-900">
+          <strong>Service:</strong> {service.servicename}
+        </p>
+        <p className="text-lg text-blue-900">
+          <strong>Provider:</strong> {service.providername}
+        </p>
+        <p className="text-lg text-blue-900">
+          <strong>Status:</strong>{" "}
+          <span
+            className={`font-semibold ${
+              service.status ? "text-green-700" : "text-red-700"
+            }`}
+          >
+            {service.status ? "Open" : "Closed"}
+          </span>
+        </p>
+      </div>
+
+      {/* Request Form */}
+      <h2 className="text-xl font-semibold text-blue-800 mb-3">
+        Request Details
+      </h2>
+
+      <form onSubmit={handleSubmit} className="flex flex-col gap-y-4">
+        <input
+          type="text"
+          name="clientName"
+          placeholder="Your Name"
+          value={formData.clientName}
+          onChange={handleChange}
+          required
+          className="p-2 rounded border border-blue-300 focus:outline-none"
+        />
+
+        <input
+          type="date"
+          name="serviceDate"
+          value={formData.serviceDate}
+          onChange={handleChange}
+          required
+          className="p-2 rounded border border-blue-300 focus:outline-none"
+        />
+
+        <input
+          type="number"
+          name="price"
+          placeholder="Price (Min $40)"
+          value={formData.price}
+          onChange={handleChange}
+          required
+          className="p-2 rounded border border-blue-300 focus:outline-none"
+        />
+
+        <button
+          type="submit"
+          className="mt-4 bg-blue-600 hover:bg-blue-700 text-white py-2 rounded text-lg"
+        >
+          Submit Request
+        </button>
+      </form>
+    </div>
+  );
+};
+
+export default ClientRequest;
