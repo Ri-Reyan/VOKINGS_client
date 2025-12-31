@@ -73,27 +73,39 @@ const AdminAuth = () => {
       {/* Floating Lottie Animations */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         <div
-          className="absolute top-10 left-1/4 sm:top-12 sm:left-1/5 w-12 h-12"
+          className="absolute top-40 left-1/4 sm:top-12 sm:left-1/5 w-12 h-12 lg:w-24 lg:h-24 lg:"
           ref={BrainRef}
         >
           <Lottie animationData={BrainAnimation} loop />
         </div>
         <div
-          className="absolute top-16 right-1/4 sm:top-20 sm:right-1/5 w-12 h-12"
+          className="absolute top-48 right-1/4 sm:top-20 sm:right-1/5 w-12 h-12 lg:w-24 lg:h-24"
           ref={DoctorRef}
         >
           <Lottie animationData={DoctorAnimation} loop />
         </div>
-        <div className="absolute bottom-20 left-1/5 w-12 h-12" ref={FanRef}>
+        <div
+          className="absolute bottom-20 left-1/5 w-12 h-12  lg:w-24 lg:h-24"
+          ref={FanRef}
+        >
           <Lottie animationData={FanAnimation} loop />
         </div>
-        <div className="absolute bottom-16 right-1/5 w-12 h-12" ref={GuitarRef}>
+        <div
+          className="absolute bottom-14 right-1/4 w-12 h-12  lg:w-24 lg:h-24"
+          ref={GuitarRef}
+        >
           <Lottie animationData={GuitarAnimation} loop />
         </div>
-        <div className="absolute top-24 left-1/4 w-12 h-12" ref={CutRef}>
+        <div
+          className="absolute top-24 left-1/7 w-12 h-12  lg:w-24 lg:h-24"
+          ref={CutRef}
+        >
           <Lottie animationData={CutAnimation} loop />
         </div>
-        <div className="absolute top-32 right-1/4 w-12 h-12" ref={GavelRef}>
+        <div
+          className="absolute top-16 right-1/4 w-12 h-12  lg:w-24 lg:h-24"
+          ref={GavelRef}
+        >
           <Lottie animationData={GavelAnimation} loop />
         </div>
       </div>
