@@ -3,82 +3,98 @@ import footerConnectionImg from "../../assets/img/Footer-Element-400x66.png";
 import Lottie from "lottie-react";
 import supportAnimation from "../../assets/animations/Support.json";
 import aboutAnimation from "../../assets/animations/Learn More.json";
-import { FaFacebookF } from "react-icons/fa";
-import { FaLinkedinIn } from "react-icons/fa";
-import { FaInstagram } from "react-icons/fa6";
+import { FaFacebookF, FaLinkedinIn, FaInstagram } from "react-icons/fa";
 import { FaRegCopyright } from "react-icons/fa6";
-import { useNavigate } from "react-router-dom";
 
 const Footer = () => {
-  const navigate = useNavigate();
   return (
-    <section className="flex flex-col gap-y-8 z-40">
-      <div>
-        <img className="" src={footerConnectionImg} alt="footerConnectionImg" />
+    <footer className="relative z-40 mt-24">
+      {/* Decorative divider */}
+      <div className="flex justify-center mb-10">
+        <img
+          src={footerConnectionImg}
+          alt="Footer connector"
+          className="w-screen"
+        />
       </div>
 
-      <div className="flex flex-row gap-y-8 gap-x-6  px-4 md:px-6 lg:px-12 text-center">
-        <div className="flex flex-col gap-y-2 w-1/2">
-          <div className="flex flex-row gap-x-4">
-            <Lottie
-              className="h-[5vh]"
-              animationData={supportAnimation}
-              loop={true}
-            />
-            <h1>Support</h1>
+      {/* Main footer content */}
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-12">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-10 text-center sm:text-left">
+          {/* Support */}
+          <div className="flex flex-col gap-4 md:place-self-center lg:place-self-center">
+            <div className="flex items-center justify-center sm:justify-start gap-3 lg:place-self-center">
+              <Lottie
+                className="h-10 w-10"
+                animationData={supportAnimation}
+                loop
+              />
+              <h2 className="text-lg font-medium">Support</h2>
+            </div>
+
+            <ul className="flex flex-col gap-2 text-sm text-gray-400">
+              <li className="hover:text-blue-400 cursor-pointer">Live chat</li>
+              <li className="hover:text-blue-400 cursor-pointer">
+                Help center
+              </li>
+              <li className="hover:text-blue-400 cursor-pointer">
+                How it works
+              </li>
+            </ul>
           </div>
 
-          <h5 className="text-gray-400 hover:text-blue-400">Live chat</h5>
-          <h5 className="text-gray-400 hover:text-blue-400">Help center</h5>
-          <h5 className="text-gray-400 hover:text-blue-400">How it works</h5>
-        </div>
-        <div className="flex flex-col gap-y-2 w-1/2">
-          <div className="flex flex-row gap-x-4">
-            <Lottie
-              className="h-[5vh]"
-              animationData={aboutAnimation}
-              loop={true}
-            />
-            <h1>About</h1>
-          </div>
+          {/* About */}
+          <div className="flex flex-col gap-4 md:place-self-center lg:place-self-center">
+            <div className="flex items-center justify-center sm:justify-start gap-3 ">
+              <Lottie
+                className="h-10 w-10"
+                animationData={aboutAnimation}
+                loop
+              />
+              <h2 className="text-lg font-medium">About</h2>
+            </div>
 
-          <h5 className="text-gray-400 hover:text-blue-400">Reviews</h5>
-          <h5 className="text-gray-400 hover:text-blue-400">Our teams</h5>
-          <h5 className="text-gray-400 hover:text-blue-400">Contacts</h5>
+            <ul className="flex flex-col gap-2 text-sm text-gray-400">
+              <li className="hover:text-blue-400 cursor-pointer">Reviews</li>
+              <li className="hover:text-blue-400 cursor-pointer">Our team</li>
+              <li className="hover:text-blue-400 cursor-pointer">Contact</li>
+            </ul>
+          </div>
+        </div>
+
+        {/* Divider */}
+        <hr className="my-10 border-white/20" />
+
+        {/* Socials */}
+        <div className="flex justify-center gap-8">
+          <FaFacebookF
+            className="cursor-pointer hover:text-blue-400"
+            size={26}
+          />
+          <FaLinkedinIn
+            className="cursor-pointer hover:text-blue-400"
+            size={26}
+          />
+          <FaInstagram
+            className="cursor-pointer hover:text-blue-400"
+            size={26}
+          />
+        </div>
+
+        {/* Divider */}
+        <hr className="my-8 border-white/20" />
+
+        {/* Copyright */}
+        <div className="flex flex-wrap items-center justify-center gap-2 text-sm text-gray-500">
+          <span>Copyright</span>
+          <FaRegCopyright size={16} />
+          <span>2026</span>
+          <span className="font-medium">VOKINGS.com</span>
         </div>
       </div>
-      <hr />
-      <div className="flex flex-row gap-x-8 px-4 md:px-6 lg:px-12 place-content-center w-full">
-        <FaFacebookF
-          onClick={() => navigate("https://www.facebook.com/i.reyannn")}
-          size={"30px"}
-        />
-        <FaLinkedinIn
-          onClick={() =>
-            navigate(
-              "https://www.linkedin.com/in/ri-reyan-2207b8349?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app"
-            )
-          }
-          size={"30px"}
-        />
-        <FaInstagram
-          onClick={() =>
-            navigate(
-              "https://www.instagram.com/i.reyannn?igsh=ZGJtaGxoYWhxdXV6"
-            )
-          }
-          size={"30px"}
-        />
-      </div>
-      <hr />
-      <div className="flex flex-row place-content-center gap-x-1">
-        <h3>Copyright</h3>
-        <FaRegCopyright className="" size={"20px"} />
-        <h3>2026</h3>
-        <h3>VOKINGS.com</h3>
-      </div>
-      <hr />
-    </section>
+
+      <hr className="mt-10 border-white/10" />
+    </footer>
   );
 };
 

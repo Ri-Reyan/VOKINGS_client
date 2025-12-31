@@ -17,7 +17,6 @@ const CreateService = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
     if (!image) {
       alert("Image is required");
       return;
@@ -31,15 +30,12 @@ const CreateService = () => {
 
     try {
       setLoading(true);
-
       const res = await axios.post(
         `${import.meta.env.VITE_API_URI}/api/provider/createservice`,
         formData,
         {
           withCredentials: true,
-          headers: {
-            "Content-Type": "multipart/form-data",
-          },
+          headers: { "Content-Type": "multipart/form-data" },
         }
       );
 
@@ -47,7 +43,6 @@ const CreateService = () => {
         setServicename("");
         setProvidername("");
         setImage(null);
-
         e.target.reset();
       }
     } catch (err) {
@@ -59,27 +54,27 @@ const CreateService = () => {
   };
 
   return (
-    <div>
+    <div className="flex justify-center">
       <form
         onSubmit={handleSubmit}
-        className="flex flex-col place-items-center gap-y-4 border border-gray-200 p-4 rounded-md bg-transparent"
+        className="flex flex-col gap-4 border border-gray-200 p-6 rounded-md w-full max-w-lg bg-white/80 backdrop-blur-sm"
       >
         <input
-          onChange={(e) => setServicename(e.target.value)}
-          className="bg-blue-50 p-4 rounded-md focus:outline-none"
           type="text"
           value={servicename}
+          onChange={(e) => setServicename(e.target.value)}
           placeholder="Enter service name"
           required
+          className="w-full p-3 rounded-md bg-blue-50 focus:outline-none focus:ring-2 focus:ring-blue-400"
         />
 
         <input
-          onChange={(e) => setProvidername(e.target.value)}
-          className="bg-blue-50 p-4 rounded-md focus:outline-none"
           type="text"
           value={providername}
+          onChange={(e) => setProvidername(e.target.value)}
           placeholder="Enter provider name"
           required
+          className="w-full p-3 rounded-md bg-blue-50 focus:outline-none focus:ring-2 focus:ring-blue-400"
         />
 
         {/* Image Upload */}
@@ -87,26 +82,28 @@ const CreateService = () => {
           type="file"
           accept="image/*"
           onChange={(e) => setImage(e.target.files[0])}
-          className="bg-blue-50 p-2 rounded-md w-[60vw]"
           required
+          className="w-full p-2 rounded-md bg-blue-50"
         />
 
-        <div className="flex flex-row gap-x-2 items-center w-[60vw] place-content-center">
-          <h1 className="text-xl font-medium text-black w-1/3">Status:</h1>
-          <h1
+        {/* Status Toggle */}
+        <div className="flex flex-col sm:flex-row sm:items-center sm:gap-4">
+          <span className="text-lg font-medium">Status:</span>
+          <button
+            type="button"
             onClick={() => setStatus(!status)}
-            className={`${
+            className={`px-4 py-1 rounded-md text-white font-medium text-lg transition ${
               status ? "bg-green-500" : "bg-red-500"
-            } cursor-pointer font-medium rounded-md px-3 py-1 text-white text-lg`}
+            }`}
           >
             {status ? "Open" : "Closed"}
-          </h1>
+          </button>
         </div>
 
         <button
           type="submit"
           disabled={loading}
-          className="bg-black text-white px-6 py-2 rounded-md disabled:opacity-50"
+          className="bg-black text-white px-6 py-2 rounded-md disabled:opacity-50 hover:bg-gray-900 transition"
         >
           {loading ? "Uploading..." : "Create Service"}
         </button>

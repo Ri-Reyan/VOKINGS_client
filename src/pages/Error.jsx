@@ -3,15 +3,18 @@ import ErrorVideo from "../assets/Video/Search - LottieFiles Platform.mp4";
 
 const Error = () => {
   return (
-    <div className="h-screen w-screen p-4 md:p-6 lg:p-8">
-      <video
-        className="h-full w-full"
-        loop
-        muted
-        autoPlay
-        src={ErrorVideo}
-      ></video>
-    </div>
+    <section className="min-h-screen flex items-center justify-center px-4 sm:px-6 lg:px-8">
+      <div className="w-full max-w-5xl">
+        <video
+          className="w-full h-auto max-h-[80vh] object-contain mx-auto"
+          loop
+          muted
+          autoPlay
+          playsInline
+          src={ErrorVideo}
+        />
+      </div>
+    </section>
   );
 };
 

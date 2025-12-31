@@ -3,7 +3,6 @@ import { UseUser } from "../context/User/UserContext";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import { Link } from "react-router-dom";
-gsap.registerPlugin(useGSAP);
 
 const Slider = () => {
   const { expand } = UseUser();
@@ -14,30 +13,25 @@ const Slider = () => {
     () => {
       const tl = gsap.timeline();
 
+      if (!slideRef.current) return;
+
       tl.to(slideRef.current, {
-        x: expand ? "-1%" : "100%",
-        opacity: expand ? "1" : "0",
-        duration: 0.8,
+        x: expand ? "0%" : "100%",
+        opacity: expand ? 1 : 0,
+        duration: 0.5,
         ease: "power3.out",
-        display: expand ? "block" : "none",
+        pointerEvents: expand ? "auto" : "none",
       });
 
-      tl.fromTo(
-        sliderTextRef.current.children,
-        { y: -1, opacity: 0, display: expand ? "block" : "none" },
-        {
-          y: 0,
-          opacity: 1,
-          stagger: 0.1,
-          display: expand ? "block" : "none",
-          duration: 0.8,
-        },
-        "-=0.1"
-      );
+      if (sliderTextRef.current) {
+        tl.fromTo(
+          sliderTextRef.current.children,
+          { y: -10, opacity: 0 },
+          { y: 0, opacity: 1, stagger: 0.1, duration: 0.5 }
+        );
+      }
 
-      return () => {
-        tl.kill();
-      };
+      return () => tl.kill();
     },
     { dependencies: [expand] }
   );
@@ -45,24 +39,22 @@ const Slider = () => {
   return (
     <div
       ref={slideRef}
-      className="w-1/3 h-screen mt-[12vh] bg-red-[#f2f7ff] fixed hidden top-0 right-0 lg:hidden z-40 bg-blue-50 backdrop-blur-xl"
+      className="fixed top-0 right-0 h-screen w-4/5 sm:w-3/5 md:w-1/3 bg-blue-50 backdrop-blur-xl shadow-lg z-40 flex flex-col items-center pt-20 lg:hidden"
     >
-      <div
+      <nav
         ref={sliderTextRef}
-        className="items-center text-center font-normal text-xl pt-4 flex flex-col"
+        className="flex flex-col items-center gap-6 text-xl font-medium"
       >
-        <Link to="/" className="text-black hover:text-blue-400">
+        <Link to="/" className="hover:text-blue-400 transition">
           Home
         </Link>
-
-        <Link to="/services" className="text-black hover:text-blue-400">
+        <Link to="/services" className="hover:text-blue-400 transition">
           Services
         </Link>
-
-        <Link to="/adminpanel" className="text-black hover:text-blue-400">
+        <Link to="/adminpanel" className="hover:text-blue-400 transition">
           Admin
         </Link>
-      </div>
+      </nav>
     </div>
   );
 };

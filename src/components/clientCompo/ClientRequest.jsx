@@ -40,11 +40,11 @@ const ClientRequest = () => {
 
   if (!serviceId) {
     return (
-      <div className="text-center mt-[20vh]">
-        <h1 className="text-xl text-red-500">Invalid request context</h1>
+      <div className="text-center mt-[20vh] px-4">
+        <h1 className="text-xl text-red-500 mb-4">Invalid request context</h1>
         <button
           onClick={() => navigate("/services")}
-          className="mt-4 px-4 py-2 bg-blue-500 text-white rounded"
+          className="px-4 py-2 bg-blue-500 text-white rounded"
         >
           Go Back
         </button>
@@ -75,7 +75,6 @@ const ClientRequest = () => {
       return;
     }
 
-    // Next step: send this to backend
     console.log({
       serviceId,
       ...formData,
@@ -85,37 +84,39 @@ const ClientRequest = () => {
   };
 
   return (
-    <div className="max-w-3xl mx-auto mt-[12vh] p-6 bg-blue-100 rounded-md shadow-md">
+    <div className="max-w-3xl mx-auto mt-[12vh] p-4 sm:p-6 md:p-8 bg-blue-100 rounded-md shadow-md">
       {/* Service Verification */}
-      <h1 className="text-2xl font-semibold text-blue-800 mb-4">
+      <h1 className="text-2xl font-semibold text-blue-800 mb-4 text-center md:text-left">
         Verify Service
       </h1>
 
-      <div className="bg-blue-200 p-4 rounded-md mb-6">
-        <p className="text-lg text-blue-900">
-          <strong>Service:</strong> {service.servicename}
-        </p>
-        <p className="text-lg text-blue-900">
-          <strong>Provider:</strong> {service.providername}
-        </p>
-        <p className="text-lg text-blue-900">
-          <strong>Status:</strong>{" "}
-          <span
-            className={`font-semibold ${
-              service.status ? "text-green-700" : "text-red-700"
-            }`}
-          >
-            {service.status ? "Open" : "Closed"}
-          </span>
-        </p>
+      <div className="bg-blue-200 p-4 rounded-md mb-6 flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4">
+        <div>
+          <p className="text-lg text-blue-900 font-medium">
+            <strong>Service:</strong> {service.servicename}
+          </p>
+          <p className="text-lg text-blue-900 font-medium">
+            <strong>Provider:</strong> {service.providername}
+          </p>
+          <p className="text-lg text-blue-900 font-medium">
+            <strong>Status:</strong>{" "}
+            <span
+              className={`font-semibold ${
+                service.status ? "text-green-700" : "text-red-700"
+              }`}
+            >
+              {service.status ? "Open" : "Closed"}
+            </span>
+          </p>
+        </div>
       </div>
 
       {/* Request Form */}
-      <h2 className="text-xl font-semibold text-blue-800 mb-3">
+      <h2 className="text-xl font-semibold text-blue-800 mb-3 text-center md:text-left">
         Request Details
       </h2>
 
-      <form onSubmit={handleSubmit} className="flex flex-col gap-y-4">
+      <form className="flex flex-col gap-4" onSubmit={handleSubmit}>
         <input
           type="text"
           name="clientName"
@@ -123,7 +124,7 @@ const ClientRequest = () => {
           value={formData.clientName}
           onChange={handleChange}
           required
-          className="p-2 rounded border border-blue-300 focus:outline-none"
+          className="p-2 rounded border border-blue-300 focus:outline-none w-full"
         />
 
         <input
@@ -132,7 +133,7 @@ const ClientRequest = () => {
           value={formData.serviceDate}
           onChange={handleChange}
           required
-          className="p-2 rounded border border-blue-300 focus:outline-none"
+          className="p-2 rounded border border-blue-300 focus:outline-none w-full"
         />
 
         <input
@@ -142,12 +143,12 @@ const ClientRequest = () => {
           value={formData.price}
           onChange={handleChange}
           required
-          className="p-2 rounded border border-blue-300 focus:outline-none"
+          className="p-2 rounded border border-blue-300 focus:outline-none w-full"
         />
 
         <button
           type="submit"
-          className="mt-4 bg-blue-600 hover:bg-blue-700 text-white py-2 rounded text-lg"
+          className="mt-4 bg-blue-600 hover:bg-blue-700 text-white py-2 rounded text-lg w-full"
         >
           Submit Request
         </button>

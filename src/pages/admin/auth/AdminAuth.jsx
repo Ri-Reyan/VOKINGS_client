@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React, { useRef, useLayoutEffect } from "react";
 import Lottie from "lottie-react";
 import FanAnimation from "../../../assets/animations/Fan.json";
 import BrainAnimation from "../../../assets/animations/Brain.json";
@@ -7,15 +7,12 @@ import GavelAnimation from "../../../assets/animations/Gavel.json";
 import GuitarAnimation from "../../../assets/animations/Guitar.json";
 import CutAnimation from "../../../assets/animations/cut.json";
 import { UseAdmin } from "../../../context/Admin/AdminContext";
-import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import { useLayoutEffect } from "react";
 
 const AdminAuth = () => {
   const { email, setEmail, password, setPassword, setToken } = UseAdmin();
-
   const navigate = useNavigate();
 
   const BrainRef = useRef(null);
@@ -52,25 +49,19 @@ const AdminAuth = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
     try {
       const res = await axios.post(
         `${import.meta.env.VITE_API_URI}/api/admin/signin`,
-        {
-          email,
-          password,
-        },
-        {
-          withCredentials: true,
-        }
+        { email, password },
+        { withCredentials: true }
       );
 
       if (res.status === 200) {
         setToken(res.data.token);
         setEmail("");
         setPassword("");
-        navigate("/adminpanel");
         localStorage.setItem("token", res.data.token);
+        navigate("/adminpanel");
       }
     } catch (err) {
       console.error(err.response?.data || err.message);
@@ -78,81 +69,62 @@ const AdminAuth = () => {
   };
 
   return (
-    <section className="w-screen mt-[20vh]">
-      <div>
-        <div ref={CutRef}>
-          <Lottie
-            className="h-[60px] relative bottom-[5vh] right-[20vw]"
-            animationData={CutAnimation}
-            loop
-            autoplay
-          />
+    <section className="min-h-screen flex flex-col items-center justify-center relative px-4 sm:px-6 lg:px-12 bg-gradient-to-b from-blue-50 to-white">
+      {/* Floating Lottie Animations */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        <div
+          className="absolute top-10 left-1/4 sm:top-12 sm:left-1/5 w-12 h-12"
+          ref={BrainRef}
+        >
+          <Lottie animationData={BrainAnimation} loop />
         </div>
-        <div ref={FanRef}>
-          <Lottie
-            className="h-[60px] relative left-[20vw] bottom-[9vh]"
-            animationData={FanAnimation}
-            loop
-            autoplay
-          />
+        <div
+          className="absolute top-16 right-1/4 sm:top-20 sm:right-1/5 w-12 h-12"
+          ref={DoctorRef}
+        >
+          <Lottie animationData={DoctorAnimation} loop />
         </div>
-        <div ref={BrainRef}>
-          <Lottie
-            className="h-[60px] relative right-[40vw]"
-            animationData={BrainAnimation}
-            loop
-            autoplay
-          />
+        <div className="absolute bottom-20 left-1/5 w-12 h-12" ref={FanRef}>
+          <Lottie animationData={FanAnimation} loop />
         </div>
-        <div ref={DoctorRef}>
-          <Lottie
-            className="h-[60px] relative left-[35vw]"
-            animationData={DoctorAnimation}
-            loop
-            autoplay
-          />
+        <div className="absolute bottom-16 right-1/5 w-12 h-12" ref={GuitarRef}>
+          <Lottie animationData={GuitarAnimation} loop />
         </div>
-        <div ref={GuitarRef}>
-          <Lottie
-            className="h-[60px] relative top-[15vh] right-[20vw]"
-            animationData={GuitarAnimation}
-            loop
-            autoplay
-          />
+        <div className="absolute top-24 left-1/4 w-12 h-12" ref={CutRef}>
+          <Lottie animationData={CutAnimation} loop />
         </div>
-        <div ref={GavelRef}>
-          <Lottie
-            className="h-[60px] relative bottom-[5vh] left-[20vw]"
-            animationData={GavelAnimation}
-            loop
-            autoplay
-          />
+        <div className="absolute top-32 right-1/4 w-12 h-12" ref={GavelRef}>
+          <Lottie animationData={GavelAnimation} loop />
         </div>
       </div>
 
+      {/* Login Form */}
       <form
         onSubmit={handleSubmit}
-        className="flex flex-col place-items-center place-self-center w-[65vw] bg-transparent relative p-4 z-30 backdrop-blur-sm bottom-80 border border-gray-200 gap-y-3 rounded-md"
+        className="w-full max-w-md bg-white/80 backdrop-blur-sm border border-gray-200 p-6 rounded-lg flex flex-col gap-4 z-10 relative"
       >
         <input
-          onChange={(e) => setEmail(e.target.value)}
-          className="bg-blue-50 p-2 focus:outline-none rounded"
           type="email"
           name="email"
           value={email}
           placeholder="Email"
+          onChange={(e) => setEmail(e.target.value)}
+          className="p-2 rounded border focus:outline-none focus:ring-2 focus:ring-blue-400"
           required
         />
         <input
-          onChange={(e) => setPassword(e.target.value)}
-          className="bg-blue-50 p-2 focus:outline-none rounded"
           type="password"
           name="password"
           value={password}
-          required
           placeholder="Password"
+          onChange={(e) => setPassword(e.target.value)}
+          className="p-2 rounded border focus:outline-none focus:ring-2 focus:ring-blue-400"
+          required
         />
-        <button className="w-[100%] bg-blue-400 p-2 text-xl font-medium text-white hover:bg-black">
+        <button
+          type="submit"
+          className="w-full bg-blue-400 text-white text-lg font-medium p-2 rounded hover:bg-black transition"
+        >
           Login
         </button>
       </form>

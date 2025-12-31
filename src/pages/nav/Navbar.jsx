@@ -1,4 +1,4 @@
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import VokingsLogo from "../../assets/img/favicon.svg";
 import MenuBar from "../../assets/Video/Menu Bar Animations - Free Download in GIF, Lottie JSON.mp4";
 import { UseUser } from "../../context/User/UserContext";
@@ -6,44 +6,56 @@ import { UseUser } from "../../context/User/UserContext";
 const Navbar = () => {
   const { expand, setExpand } = UseUser();
   const navigate = useNavigate();
+
   return (
-    <nav
-      className="
-      fixed top-0 left-0 w-full h-[80px] z-50
-      backdrop-blur-md
-      bg-white/8 rounded
-      border-b border-white/20
-      shadow-lg
-    "
-    >
-      <section className="w-screen px-4 py-4 flex">
-        <div onClick={() => navigate("/")} className="flex gap-1 w-1/2 my-2">
-          <img className="h-[25px] my-1 w-auto" src={VokingsLogo} alt="" />
-          <h1 className="text-2xl flex tracking-tighter">
-            V <span>O</span>
-            KINGS
+    <nav className="fixed top-0 left-0 w-full z-50 h-[70px] sm:h-[80px] backdrop-blur-md bg-white/10 border-b border-white/20 shadow-lg">
+      <div className="mx-auto max-w-7xl h-full px-4 sm:px-6 lg:px-12 flex items-center justify-between">
+        {/* BRAND */}
+        <div
+          onClick={() => navigate("/")}
+          className="flex items-center gap-2 cursor-pointer"
+        >
+          <img className="h-6 sm:h-7 w-auto" src={VokingsLogo} alt="Vokings" />
+          <h1 className="text-xl sm:text-2xl font-medium tracking-tighter">
+            V<span className="font-normal">O</span>KINGS
           </h1>
         </div>
 
-        <div
+        {/* DESKTOP NAV */}
+        <ul className="hidden lg:flex items-center gap-8 text-sm font-medium">
+          <li>
+            <Link to="/" className="hover:text-blue-400 transition">
+              Home
+            </Link>
+          </li>
+          <li>
+            <Link to="/services" className="hover:text-blue-400 transition">
+              Services
+            </Link>
+          </li>
+          <li>
+            <Link to="/adminpanel" className="hover:text-blue-400 transition">
+              Admin
+            </Link>
+          </li>
+        </ul>
+
+        {/* MOBILE MENU BUTTON */}
+        <button
           onClick={() => setExpand(!expand)}
-          className="w-1/2 flex place-content-end lg:hidden"
+          className="lg:hidden flex items-center justify-center"
+          aria-label="Toggle menu"
         >
           <video
             autoPlay
             loop
             muted
-            className="h-[50px] w-[50px] bg-white/8 backdrop-blur-md"
+            playsInline
+            className="h-10 w-10 rounded-md bg-white/10 backdrop-blur-md"
             src={MenuBar}
-          ></video>
-        </div>
-        {/* <ul className="flex-col gap-6 text-black">
-          <li className="cursor-pointer">Login</li>
-          <li className="cursor-pointer">Sign up</li>
-          <li className="cursor-pointer">About</li>
-          <li className="cursor-pointer">Contact</li>
-        </ul> */}
-      </section>
+          />
+        </button>
+      </div>
     </nav>
   );
 };

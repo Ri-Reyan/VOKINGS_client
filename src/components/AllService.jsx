@@ -15,14 +15,12 @@ const AllService = () => {
           `${import.meta.env.VITE_API_URI}/api/admin/findallservice`,
           { withCredentials: true }
         );
-        // Ensure we always set an array
         setServiceList(res.data.services || []);
       } catch (err) {
         console.error("Service fetch failed:", err);
         setServiceList([]);
       }
     };
-
     fetchServices();
   }, [setServiceList]);
 
@@ -34,7 +32,6 @@ const AllService = () => {
         { _id: id },
         { withCredentials: true }
       );
-      // Optimistic state update
       setServiceList(servicelist.filter((s) => s._id !== id));
     } catch (err) {
       console.error("Delete failed:", err);
@@ -42,10 +39,10 @@ const AllService = () => {
     }
   };
 
-  if (!Array.isArray(servicelist)) return null; // safety fallback
+  if (!Array.isArray(servicelist)) return null;
 
   return (
-    <div className="flex flex-col gap-y-4">
+    <div className="flex flex-col gap-6">
       {servicelist.length === 0 ? (
         <div>
           <h1 className="text-xl text-center text-gray-600 mt-4">
@@ -56,19 +53,21 @@ const AllService = () => {
         servicelist.map((item) => (
           <div
             key={item._id}
-            className="flex flex-row w-full rounded-md bg-blue-300"
+            className="flex flex-col md:flex-row w-full bg-blue-300 rounded-md overflow-hidden shadow-md"
           >
-            <div className="p-4 flex flex-col gap-y-2 rounded-md bg-blue-300">
-              <h1 className="text-lg text-white">
+            {/* Service Info */}
+            <div className="flex-1 p-4 flex flex-col gap-2 bg-blue-300">
+              <h1 className="text-lg text-white font-semibold">
                 Service: {item.servicename}
               </h1>
-              <h1 className="text-lg text-white">
+              <h1 className="text-lg text-white font-semibold">
                 Provider: {item.providername}
               </h1>
-              <div className="flex gap-x-2 items-center">
-                <span className="text-white text-lg">Status:</span>
+
+              <div className="flex items-center gap-2">
+                <span className="text-white text-lg font-medium">Status:</span>
                 <span
-                  className={`text-lg font-semibold p-1 text-white rounded-md ${
+                  className={`text-lg font-semibold p-1 rounded-md text-white ${
                     item.status ? "bg-green-500" : "bg-red-500"
                   }`}
                 >
@@ -76,22 +75,24 @@ const AllService = () => {
                 </span>
               </div>
 
+              {/* Delete Button */}
               <div
                 onClick={() => handleDelete(item._id)}
-                className="flex flex-col cursor-pointer"
+                className="flex flex-col items-center cursor-pointer mt-2"
               >
                 <Lottie
-                  className="h-[8vh] place-self-center"
+                  className="h-16 w-16 sm:h-20 sm:w-20"
                   animationData={deleteAnimation}
                   loop
                 />
-                <span className="text-xl text-center">Delete</span>
+                <span className="text-white text-lg font-medium">Delete</span>
               </div>
             </div>
 
-            <div className="w-1/3 flex justify-end">
+            {/* Image */}
+            <div className="flex justify-center items-center p-4 bg-blue-200 md:w-1/3">
               <img
-                className="h-[20vh] mt-7 ml-8"
+                className="h-40 sm:h-48 md:h-56 w-auto rounded-md object-cover"
                 src={item.image}
                 alt={item.servicename}
               />

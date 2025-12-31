@@ -3,9 +3,11 @@ import ClientService from "../../components/clientCompo/ClientServices";
 
 const Services = () => {
   return (
-    <div className="flex flex-col mt-[20vh] p-4 md:p-8 lg:p-12">
-      <ClientService />
-    </div>
+    <section className="pt-[16vh] px-4 sm:px-6 lg:px-12">
+      <div className="mx-auto max-w-7xl">
+        <ClientService />
+      </div>
+    </section>
   );
 };
 

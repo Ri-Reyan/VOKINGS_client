@@ -15,55 +15,61 @@ const Admin = () => {
   } = UseAdmin();
 
   return (
-    <div className="flex flex-col p-4 md:p-8 lg:p-12 gap-x-6 gap-y-8 mt-[20vh]">
-      <div className="flex flex-row gap-x-4">
-        <div
-          onClick={() => {
-            setService(true);
-            setRequests(false);
-            setAllService(false);
-          }}
-          className="w-1/2 flex place-content-center bg-blue-400 text-white text-xl p-2 rounded-md hover:bg-black"
-        >
-          <button>Service</button>
-        </div>
-        <div
-          onClick={() => {
-            setRequests(true);
-            setService(false);
-            setAllService(false);
-          }}
-          className="w-1/2 flex place-content-center bg-blue-400 text-white text-xl p-2 rounded-md hover:bg-black"
-        >
-          <button>Requests</button>
-        </div>
-      </div>
+    <section className="pt-[16vh] px-4 sm:px-6 lg:px-12">
+      <div className="mx-auto max-w-7xl flex flex-col gap-6">
+        {/* TOP BUTTONS */}
+        <div className="flex flex-col sm:flex-row sm:gap-4 gap-4">
+          <button
+            onClick={() => {
+              setService(true);
+              setRequests(false);
+              setAllService(false);
+            }}
+            className="flex-1 bg-blue-400 text-white text-lg sm:text-xl p-2 rounded-md hover:bg-black transition"
+          >
+            Service
+          </button>
 
-      <div>
-        <div
-          onClick={() => {
-            setAllService(true);
-            setRequests(false);
-            setService(false);
-          }}
-          className=" flex place-content-center bg-blue-400 text-white text-xl p-2 rounded-md hover:bg-black"
-        >
-          <button>All service</button>
+          <button
+            onClick={() => {
+              setRequests(true);
+              setService(false);
+              setAllService(false);
+            }}
+            className="flex-1 bg-blue-400 text-white text-lg sm:text-xl p-2 rounded-md hover:bg-black transition"
+          >
+            Requests
+          </button>
+        </div>
+
+        {/* SINGLE BUTTON BELOW */}
+        <div>
+          <button
+            onClick={() => {
+              setAllService(true);
+              setRequests(false);
+              setService(false);
+            }}
+            className="w-full bg-blue-400 text-white text-lg sm:text-xl p-2 rounded-md hover:bg-black transition"
+          >
+            All Service
+          </button>
+        </div>
+
+        {/* CONTENT AREA */}
+        <div className="mt-4">
+          {service ? (
+            <CreateService />
+          ) : requests ? (
+            <Requests />
+          ) : allservice ? (
+            <AllService />
+          ) : (
+            <Requests />
+          )}
         </div>
       </div>
-
-      <div>
-        {service ? (
-          <CreateService />
-        ) : requests ? (
-          <Requests />
-        ) : allservice ? (
-          <AllService />
-        ) : (
-          <Requests />
-        )}
-      </div>
-    </div>
+    </section>
   );
 };
 
